@@ -4,28 +4,33 @@ Created on Wed Feb  2 10:09:44 2022
 
 @author: marta
 
-This script should be used to extract data from the TPAS database having a 
-
-
+Questo script serve a estrarre i dati dal database in json (vedi il file in json in questa cartella) a partire da una lista di verbi e pattern
 
 
 """
 
 import json
 from codecs import * 
+
+
 #%% 
-f = open('C:/Users/marta/Dati/Task/INFORMATION type/CONCEPTS/annot_download_examples_.json')
+
+#questo legge il file in json e ne salva i dati nella variabile data
+
+f = open('C:/Users/marta/Dati/Task/INFORMATION type/CONCEPTS/annot_download_examples_.json') #qui obv da sostituire con dove sta nel vostro pc
 r = json.load(f)
 
 #data is a list containing [verb, patternNum, sentence]
 
 data = r["data"]
+
 #%%
-#parsa un file [n, verbo, pattern] e ritorna una lista verb, pattern
+
+#questa funzione ritorna il tipo semantico nello slot di oggetto di una coppia (verbo, patternID)
+
 def GetType(verb, patternID):
     for el in TPASdata:
-        if el["query"] == verb: 
-            
+        if el["query"] == verb:
             Labels = el["labels"]   #è una lista
             for diz in Labels: 
                 if diz["label"] == patternID:
@@ -37,9 +42,10 @@ def GetType(verb, patternID):
                             return el["semtype"]
                         
                         
-                        
- #%%                       
+#%%                 
+
 #this parses the json GDEX file 
+
 f = open('C:/Users/marta/Dati/Task/PHYSENT type/ARTIFACTS/examples.json', "r", "utf-8")
 r = json.load(f)
 Ls = []
