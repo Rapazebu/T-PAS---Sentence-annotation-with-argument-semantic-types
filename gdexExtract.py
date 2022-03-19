@@ -6,54 +6,34 @@ Created on Tue Sep 14 17:19:33 2021
 """
     
 from codecs import *  
-
-def ParseGDEX(filename):
-    """"reads the GDEX file and returns a tuple list of the kind (verb, pattern, instance) for each row"""
-    
-    fh = open(filename, "r", "utf-8")
-    testo = fh.read().split("\n")
-    testo = testo[1:]
-    
-    Ls = []                         #contains list of tuples [()] for each raw 
-    
-    for riga in testo:
-        try:
-            rigasplit = riga.replace("\r", "").split("|")
-            if rigasplit[3] != "NOT ENOUGH EXAMPLES" and rigasplit[3] != "":
-                print(rigasplit)
-                verb = rigasplit[0]
-                patternID = rigasplit[1]
-                instance = rigasplit[3]
-            
-                tup = (verb, patternID, instance)
-        
-                Ls.append(tup)
-        except:
-            pass
-    return Ls
+import spacy-udpipe
 
 
 def ParsePattern(filename):
-    """reads the pattern list and returns a tuple list (verb, pattern)"""
+    """questa funzione legge un file in excel come il file Patterns.csv 
+    e ritorna una lista di tuple (verbo, n° pattern)"""
     
     fh = open(filename, "r", "utf-8")
     testo = fh.read().split("\n")
     testo = testo[1:]
-    
     Ls = []               #contains list of tuples [()] for each raw 
-
     for riga in testo:
         rigasplit = riga.replace("\r", "").split("|")
-
         if len(rigasplit) == 3:
             t1 = rigasplit[1]
             t2 = rigasplit[2]
             tupla = (t1, t2)
             if tupla != ('',''):
                 Ls.append(tupla)
-
     return Ls
 
+
+
+
+
+
+
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%555
 
 """"incrocia il file dei pattern e ritorna una lista di frasi per i pattern in ds"""
 def ReturnPositive(Ls, Ds):
